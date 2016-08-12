@@ -80,6 +80,7 @@ export default function Undoable(reducers) {
 		default: {
 			const nextHistory = _.mapValues(reducers, (r, k) => r(state.present[k], action));
 
+			// Do not track checkpoints that are the same as the last in the history
 			if (_.isEqual(_.last(state.past), nextHistory)) {
 				return Object.assign({}, state, {
 					present: nextHistory

@@ -1,7 +1,7 @@
 # redux-undoable
 
-A generic, high-order reducer that allows you to transparently add undo/redo functionality on top of another redux
-reducer.
+A generic, high-order reducer that allows you to transparently add undo/redo functionality on top of other redux
+reducers.
 
 [![CircleCI](https://circleci.com/gh/joshdover/redux-undoable.svg?style=svg&circle-token=6cc68f7e4284ab696c752c4fe57666130b8292b2)](https://circleci.com/gh/joshdover/redux-undoable)
 
@@ -82,7 +82,7 @@ store.getState();
 // }
 ```
 
-Dispatch an update when the input blurs:
+Dispatch an update with a checkpoint when you want a snapshot to jump back to, for example, when the input blurs:
 ```js
 store.dispatch({
   type: TEXT_UPDATE,
