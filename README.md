@@ -9,7 +9,7 @@ Inspired by the omnidan's work on [redux-undo](https://github.com/omnidan/redux-
 interface with admittedly less options but more flexibility. Most importantly, redux-undoable has the concept of "history
 checkpoints" that allow you to dispatch actions without making every change to the state a step in the undo history.
 
-For example, this allows you live updating of UI state (such as in a text input) with creating an undo step for every
+For example, this allows you live updating of UI state (such as in a text input) without creating an undo step for every
 single keypress.
 
 redux-undoable also allows you to track entire sections of your application state as a single history so undo/redo
@@ -135,3 +135,8 @@ store.getState();
 //   future: []
 // }
 ```
+
+## Credits
+
+- @joshdover
+- @tornstrom
