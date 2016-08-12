@@ -1,4 +1,8 @@
-import _ from 'lodash';
+import clone from 'lodash.clone';
+import initial from 'lodash.initial';
+import isEqual from 'lodash.isequal';
+import last from 'lodash.last';
+import mapValues from 'lodash.mapvalues';
 
 import { REDO, UNDO } from './ActionTypes';
 
@@ -21,7 +25,7 @@ import { REDO, UNDO } from './ActionTypes';
 
 */
 export default function Undoable(reducers) {
-	const initialHistory = _.mapValues(reducers, r => r());
+	const initialHistory = mapValues(reducers, r => r());
 
 	const initialState = {
 		past:    [initialHistory],
@@ -43,7 +47,7 @@ export default function Undoable(reducers) {
 			}
 
 			return {
-				past:    _.initial(_.clone(state.past)), // all but the last one
+				past:    initial(clone(state.past)), // all but the last one
 				present: state.past[state.past.length - 2],
 				future:  state.future.concat([state.present])
 			};
@@ -61,9 +65,9 @@ export default function Undoable(reducers) {
 			}
 
 			return {
-				past:    state.past.concat( [_.last(state.future) ]),
-				present: _.last(state.future),
-				future:  _.initial(_.clone(state.future)) // all but last
+				past:    state.past.concat( [last(state.future) ]),
+				present: last(state.future),
+				future:  initial(clone(state.future)) // all but last
 			};
 		}
 
@@ -78,10 +82,10 @@ export default function Undoable(reducers) {
 		* - Clear the future state
 		*/
 		default: {
-			const nextHistory = _.mapValues(reducers, (r, k) => r(state.present[k], action));
+			const nextHistory = mapValues(reducers, (r, k) => r(state.present[k], action));
 
 			// Do not track checkpoints that are the same as the last in the history
-			if (_.isEqual(_.last(state.past), nextHistory)) {
+			if (isEqual(last(state.past), nextHistory)) {
 				return Object.assign({}, state, {
 					present: nextHistory
 				});
