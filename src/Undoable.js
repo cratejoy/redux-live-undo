@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import { REDO, UNDO } from '../../constants/ActionTypes';
+import { REDO, UNDO } from './ActionTypes';
 
 /*
 * Maintains a state tree for the past, present, and future setting values. This tree allows the `present` state to be

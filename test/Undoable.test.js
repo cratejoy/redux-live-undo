@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 
-import { UNDOABLE_UNDO, UNDOABLE_REDO } from '../../constants/ActionTypes';
-import Undoable from './Undoable';
+import { UNDO, REDO } from '../src/ActionTypes';
+import Undoable from '../src/Undoable';
 
 const TEST_ACTION = 'TEST';
 const testReducer = (state = 0, action = {}) => {
@@ -98,12 +98,12 @@ describe('Undoable', () => {
 		});
 	});
 
-	describe('UNDOABLE_UNDO', () => {
+	describe('UNDO', () => {
 		context('when there is two states in the past array', () => {
 			let nextState;
 
 			beforeEach(() => {
-				const action = { type: UNDOABLE_UNDO };
+				const action = { type: UNDO };
 				nextState = UndoableReducer({
 					past: [
 						{ test: 0 },
@@ -129,7 +129,7 @@ describe('Undoable', () => {
 			let nextState;
 
 			beforeEach(() => {
-				const action = { type: UNDOABLE_UNDO };
+				const action = { type: UNDO };
 				nextState = UndoableReducer({
 					past: [
 						{ test: 0 }
@@ -147,12 +147,12 @@ describe('Undoable', () => {
 		});
 	});
 
-	describe('UNDOABLE_REDO', () => {
+	describe('REDO', () => {
 		context('when there is one states in the future array', () => {
 			let nextState;
 
 			beforeEach(() => {
-				const action = { type: UNDOABLE_REDO };
+				const action = { type: REDO };
 				nextState = UndoableReducer({
 					past: [
 						{ test: 0 }
@@ -177,7 +177,7 @@ describe('Undoable', () => {
 			let nextState;
 
 			beforeEach(() => {
-				const action = { type: UNDOABLE_REDO };
+				const action = { type: REDO };
 				nextState = UndoableReducer({
 					past: [
 						{ test: 0 }
