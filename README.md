@@ -3,6 +3,8 @@
 A generic, high-order reducer that allows you to transparently add undo/redo functionality on top of another redux
 reducer.
 
+[![CircleCI](https://circleci.com/gh/joshdover/redux-undoable.svg?style=svg&circle-token=6cc68f7e4284ab696c752c4fe57666130b8292b2)](https://circleci.com/gh/joshdover/redux-undoable)
+
 Inspired by the omnidan's work on [redux-undo](https://github.com/omnidan/redux-undo), redux-undoable provides a simpler
 interface with admittedly less options but more flexibility. Most importantly, redux-undoable has the concept of "history
 checkpoints" that allow you to dispatch actions without making every change to the state a step in the undo history.
