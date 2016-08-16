@@ -23,7 +23,9 @@ redux-undoable tracks a history of state of its sub-reducers. The state returned
 - **future**: an array of future state checkpoints, order from newest to oldest. Only populated after an undo or redo.
 
 **Note**: New history checkpoints are only recorded when the action dispatched has the `undoableHistoryCheckpoint`
-property set to `true`.
+property set to `true` and `changeDetector` returns true.
+
+Reducers can optionally provide a `changeDetector` function to override what changes are allowed to be checkpointable.
 
 ## Example Usage
 

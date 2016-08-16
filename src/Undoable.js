@@ -1,10 +1,10 @@
 import clone from 'lodash.clone';
 import initial from 'lodash.initial';
-import isEqual from 'lodash.isequal';
 import last from 'lodash.last';
 import mapValues from 'lodash.mapvalues';
 
 import { REDO, UNDO } from './ActionTypes';
+import NextState from './NextState';
 
 /*
 * Maintains a state tree for the past, present, and future setting values. This tree allows the `present` state to be
@@ -82,24 +82,26 @@ export default function Undoable(reducers) {
 		* - Clear the future state
 		*/
 		default: {
-			const nextHistory = mapValues(reducers, (r, k) => r(state.present[k], action));
+			const { nextState, anyChanged } = NextState(reducers, state, action);
 
-			// Do not track checkpoints that are the same as the last in the history
-			if (isEqual(last(state.past), nextHistory)) {
-				return Object.assign({}, state, {
-					present: nextHistory
-				});
-			} else if (!action.undoableHistoryCheckpoint) {
-				return Object.assign({}, state, {
-					present: nextHistory,
-					future:  []  // clear the future state so we don't lose these new edits by a redo
-				});
+			// New states can only be pushed into the history if anything we care about actually changed.
+			if (anyChanged) {
+				if (action.undoableHistoryCheckpoint) {
+					return {
+						past:    state.past.concat([nextState]),
+						present: nextState,
+						future:  []  // clear the future state so we don't lose these new edits by a redo
+					};
+				} else {
+					return Object.assign({}, state, {
+						present: nextState,
+						future:  []  // clear the future state so we don't lose these new edits by a redo
+					});
+				}
 			} else {
-				return {
-					past:    state.past.concat([nextHistory]),
-					present: nextHistory,
-					future:  []  // clear the future state so we don't lose these new edits by a redo
-				};
+				return Object.assign({}, state, {
+					present: nextState
+				});
 			}
 		}}
 	}

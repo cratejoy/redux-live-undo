@@ -2,18 +2,9 @@ import { expect } from 'chai';
 
 import { UNDO, REDO } from '../src/ActionTypes';
 import Undoable from '../src/Undoable';
+import TestReducer, { TEST_ACTION } from './TestReducer.test';
 
-const TEST_ACTION = 'TEST';
-const testReducer = (state = 0, action = {}) => {
-	switch (action.type) {
-	case TEST_ACTION:
-		return state + 1;
-	default:
-		return state;
-	}
-}
-
-const UndoableReducer = Undoable({ test: testReducer });
+const UndoableReducer = Undoable({ test: TestReducer });
 
 describe('Undoable', () => {
 	describe('initialization', () => {
@@ -82,9 +73,10 @@ describe('Undoable', () => {
 
 			it('updates present to the new value', () => expect(nextState.present).to.deep.equal({ test: 1 }));
 			it('appends the new value onto the past', () => {
-				expect(nextState.past).to.have.length(2);
-				expect(nextState.past[0]).to.deep.equal({ test: 0 });
-				expect(nextState.past[1]).to.deep.equal({ test: 1 });
+				expect(nextState.past).to.deep.equal([
+					{ test: 0 },
+					{ test: 1 }
+				]);
 			});
 			it('does not change future', () => expect(nextState.future).to.be.empty);
 
@@ -93,6 +85,19 @@ describe('Undoable', () => {
 					nextState.future = [{ test: 4 }];
 					nextState = UndoableReducer(nextState, { type: TEST_ACTION, undoableHistoryCheckpoint: true });
 					expect(nextState.future).to.be.empty;
+				});
+			});
+
+			context('when subreducer defines `changeDetector`', () => {
+				before(() => TestReducer.changeDetector = () => false);
+				after(() => delete TestReducer.changeDetector);
+
+				it('does push into past array', () => {
+					nextState = UndoableReducer(nextState, { type: TEST_ACTION, undoableHistoryCheckpoint: true });
+					expect(nextState.past).to.deep.equal([
+						{ test: 0 }
+					]);
+					expect(nextState.present).to.deep.equal({ test: 2 });
 				});
 			});
 		});
