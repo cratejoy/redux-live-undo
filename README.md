@@ -1,23 +1,23 @@
-# redux-undoable
+# redux-live-undo
 
 A generic, high-order reducer that allows you to transparently add undo/redo functionality on top of other redux
-reducers.
+reducers. redux-live-undo allows state to be updated as users type without creating undo steps for every state change.
 
-[![CircleCI](https://circleci.com/gh/cratejoy/redux-undoable.svg?style=svg&circle-token=6cc68f7e4284ab696c752c4fe57666130b8292b2)](https://circleci.com/gh/joshdover/redux-undoable)
+[![CircleCI](https://circleci.com/gh/cratejoy/redux-live-undo.svg?style=svg&circle-token=6cc68f7e4284ab696c752c4fe57666130b8292b2)](https://circleci.com/gh/joshdover/redux-live-undo)
 
-Inspired by the omnidan's work on [redux-undo](https://github.com/omnidan/redux-undo), redux-undoable provides a simpler
-interface with admittedly less options but more flexibility. Most importantly, redux-undoable has the concept of "history
+Inspired by the omnidan's work on [redux-undo](https://github.com/omnidan/redux-undo), redux-live-undo provides a simpler
+interface with admittedly less options but more flexibility. Most importantly, redux-live-undo has the concept of "history
 checkpoints" that allow you to dispatch actions without making every change to the state a step in the undo history.
 
 For example, this allows you live updating of UI state (such as in a text input) without creating an undo step for every
 single keypress.
 
-redux-undoable also allows you to track entire sections of your application state as a single history so undo/redo
+redux-live-undo also allows you to track entire sections of your application state as a single history so undo/redo
 actions can be synced across various types of data.
 
 ## Brief Overview
 
-redux-undoable tracks a history of state of its sub-reducers. The state returned by redux-undoable has this shape:
+redux-live-undo tracks a history of state of its sub-reducers. The state returned by redux-live-undo has this shape:
 - **present**: the current state of the sub-reducers.
 - **past**: an array of past state checkpoints, ordered from oldest to newest.
 - **future**: an array of future state checkpoints, order from newest to oldest. Only populated after an undo or redo.
@@ -43,9 +43,9 @@ function StringReducer(state = '', action = {}) {
 }
 ```
 
-Use redux-undoable to add reducer functionality:
+Use redux-live-undo to add reducer functionality:
 ```js
-import Undoable from 'redux-undoable';
+import Undoable from 'redux-live-undo';
 
 const rootReducer = Undoable({
   string: StringReducer
@@ -104,7 +104,7 @@ store.getState();
 
 Undo to the last checkpoint:
 ```js
-import { UNDO } from 'redux-undoable';
+import { UNDO } from 'redux-live-undo';
 
 store.dispatch({
   type: UNDO
@@ -122,7 +122,7 @@ store.getState();
 
 Redo the action:
 ```js
-import { REDO } from 'redux-undoable';
+import { REDO } from 'redux-live-undo';
 
 store.dispatch({
   type: REDO
