@@ -1,2 +1,2 @@
-export { default } from './src/Undoable';
-export { REDO, UNDO } from './src/ActionTypes';
+export { default } from './Undoable';
+export { REDO, UNDO } from './ActionTypes';
