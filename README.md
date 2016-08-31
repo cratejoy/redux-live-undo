@@ -3,7 +3,7 @@
 A generic, high-order reducer that allows you to transparently add undo/redo functionality on top of other redux
 reducers. redux-live-undo allows state to be updated as users type without creating undo steps for every state change.
 
-[![CircleCI](https://circleci.com/gh/cratejoy/redux-live-undo.svg?style=svg&circle-token=6cc68f7e4284ab696c752c4fe57666130b8292b2)](https://circleci.com/gh/joshdover/redux-live-undo)
+[![CircleCI](https://circleci.com/gh/cratejoy/redux-live-undo.svg?style=svg)](https://circleci.com/gh/cratejoy/redux-live-undo)
 
 Inspired by the omnidan's work on [redux-undo](https://github.com/omnidan/redux-undo), redux-live-undo provides a simpler
 interface with admittedly less options but more flexibility. Most importantly, redux-live-undo has the concept of "history
