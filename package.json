@@ -1,6 +1,6 @@
 {
   "name": "redux-live-undo",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A high-order reducer that enables generic undo/redo functionality without giving up live updates",
   "main": "lib/index.js",
   "scripts": {
