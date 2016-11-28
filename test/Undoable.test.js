@@ -101,6 +101,23 @@ describe('Undoable', () => {
 				});
 			});
 		});
+
+		context('when undoableIrreversableCheckpoint is true', () => {
+			let nextState;
+
+			beforeEach(() => {
+				const initialState = UndoableReducer({
+					past: [{ test: 0 }, { test: 1 }],
+					present: { test: 1 },
+					future: [{ something: true }]
+				}, {});
+				nextState = UndoableReducer(initialState, { type: TEST_ACTION, undoableIrreversableCheckpoint: true })
+			});
+
+			it('sets the present', () => expect(nextState.present).to.deep.equal({ test: 2 }));
+			it('keeps only the present state in the past', () => expect(nextState.past).to.deep.equal([{ test: 2 }]));
+			it('clears the future array', () => expect(nextState.future).to.be.empty);
+		});
 	});
 
 	describe('UNDO', () => {
