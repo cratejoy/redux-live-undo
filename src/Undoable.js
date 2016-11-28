@@ -86,16 +86,22 @@ export default function Undoable(reducers) {
 
 			// New states can only be pushed into the history if anything we care about actually changed.
 			if (anyChanged) {
-				if (action.undoableHistoryCheckpoint) {
+				if (action.undoableIrreversableCheckpoint) {
+					return {
+						past:    [nextState],  // irreversible checkpoints should clear out history
+						present: nextState,
+						future:  []            // clear the future state so we don't lose these new edits by a redo
+					};
+				} else if (action.undoableHistoryCheckpoint) {
 					return {
 						past:    state.past.concat([nextState]),
 						present: nextState,
-						future:  []  // clear the future state so we don't lose these new edits by a redo
+						future:  []            // clear the future state so we don't lose these new edits by a redo
 					};
 				} else {
 					return Object.assign({}, state, {
 						present: nextState,
-						future:  []  // clear the future state so we don't lose these new edits by a redo
+						future:  []            // clear the future state so we don't lose these new edits by a redo
 					});
 				}
 			} else {
