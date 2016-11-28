@@ -31,7 +31,7 @@ Reducers can optionally provide a `changeDetector` function to override what cha
 
 Flags on actions can affect the behavior of the undo history state:
 - `undoableHistoryCheckpoint`: Marks when the next state should be considered a checkpoint in the undo history
-- `undoableIrreversableCheckpoint`: Marks when the next state should clear any undo history. Typically used if related
+- `undoableIrreversibleCheckpoint`: Marks when the next state should clear any undo history. Typically used if related
 state in another system (eg. a backend service) cannot be reversed.
 
 ## Example Usage

@@ -86,7 +86,7 @@ export default function Undoable(reducers) {
 
 			// New states can only be pushed into the history if anything we care about actually changed.
 			if (anyChanged) {
-				if (action.undoableIrreversableCheckpoint) {
+				if (action.undoableIrreversibleCheckpoint) {
 					return {
 						past:    [nextState],  // irreversible checkpoints should clear out history
 						present: nextState,

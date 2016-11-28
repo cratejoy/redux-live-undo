@@ -102,7 +102,7 @@ describe('Undoable', () => {
 			});
 		});
 
-		context('when undoableIrreversableCheckpoint is true', () => {
+		context('when undoableIrreversibleCheckpoint is true', () => {
 			let nextState;
 
 			beforeEach(() => {
@@ -111,7 +111,7 @@ describe('Undoable', () => {
 					present: { test: 1 },
 					future: [{ something: true }]
 				}, {});
-				nextState = UndoableReducer(initialState, { type: TEST_ACTION, undoableIrreversableCheckpoint: true })
+				nextState = UndoableReducer(initialState, { type: TEST_ACTION, undoableIrreversibleCheckpoint: true })
 			});
 
 			it('sets the present', () => expect(nextState.present).to.deep.equal({ test: 2 }));
