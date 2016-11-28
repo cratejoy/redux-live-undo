@@ -116,7 +116,7 @@ describe('Undoable', () => {
 
 			it('sets the present', () => expect(nextState.present).to.deep.equal({ test: 2 }));
 			it('keeps only the present state in the past', () => expect(nextState.past).to.deep.equal([{ test: 2 }]));
-			it('clears the feuture array', () => expect(nextState.future).to.be.empty);
+			it('clears the future array', () => expect(nextState.future).to.be.empty);
 		});
 	});
 
